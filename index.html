@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio - Brener Castro de Paiva</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>BRENER CASTRO DE PAIVA</h1>
+            <p>Advogado | Desenvolvedor de Sistemas</p>
+        </header>
+
+        <section class="intro-section">
+            <h2>Apresentação</h2>
+            <p>
+                Esta apresentação tem por objetivo permitir que você conheça melhor Brener Castro de Paiva.
+            </p>
+            <p>
+                Formado em <strong>Direito pelo Centro Universitário UniFOA em 2011</strong>, pós-graduando em 
+                Direito e Processo do Trabalho. Exerce a advocacia com dedicação, empenho e resiliência de forma 
+                ampla em diversos ramos do direito.
+            </p>
+            <p>
+                A atuação prática abrange direito civil, previdenciário, tributário, consumidor e nas causas que 
+                permitem esses conhecimentos de forma integrada.
+            </p>
+            <p>
+                Sempre foi entusiasta de tecnologia e, por isso, graduou-se em 2025 em <strong>Sistemas de Informação 
+                pela Universidade Candido Mendes</strong>.
+            </p>
+
+            <div class="paths-section-integrated">
+                <h3>Escolha seu Caminho</h3>
+                <p>Selecione uma opção para conhecer melhor sobre Brener Castro</p>
+
+                <div class="paths-container">
+                    <div class="path-card" onclick="showPath('juridico')">
+                        <img src="imagem/imagem do botão area juridica.png" alt="Caminho Jurídico" class="path-image">
+                        <h4>Caminho Jurídico</h4>
+                        <p>Conheça a trajetória profissional na advocacia</p>
+                    </div>
+
+                    <div class="path-card" onclick="showPath('tecnologia')">
+                        <img src="imagem/imagem botão tecnologia.png" alt="Caminho Tecnológico" class="path-image">
+                        <h4>Caminho Tecnológico</h4>
+                        <p>Explore as competências em desenvolvimento de sistemas</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <div id="modal-body"></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Brener Castro de Paiva - Todos os direitos reservados</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
