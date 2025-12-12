@@ -1,17 +1,38 @@
-// Sistema de Likes - Versão LocalStorage
-const LIKE_COUNT_KEY = 'portfolio-total-likes';
+// Configuração do Firebase
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import { getFirestore, doc, getDoc, updateDoc, increment } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCAFesD2DSvxshVDfdWzk9iny4ojJlPIu0",
+  authDomain: "portfolio-c99cc.firebaseapp.com",
+  projectId: "portfolio-c99cc",
+  storageBucket: "portfolio-c99cc.firebasestorage.app",
+  messagingSenderId: "681593142360",
+  appId: "1:681593142360:web:dfbeaddb946e927c0a5e2d",
+  measurementId: "G-JP6J9WQT9S"
+};
+
+// Inicializar Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Referência para o documento de likes
+const likesRef = doc(db, 'likes', 'portfolio');
+
+// Chave para verificar se o usuário já curtiu
 const USER_LIKED_KEY = 'portfolio-user-liked';
 
 // Carregar likes ao iniciar a página
-function loadLikes() {
+async function loadLikes() {
     try {
-        // Buscar contagem de likes do localStorage
-        let count = localStorage.getItem(LIKE_COUNT_KEY);
-        if (!count) {
-            count = 0;
-            localStorage.setItem(LIKE_COUNT_KEY, '0');
+        const docSnap = await getDoc(likesRef);
+        
+        if (docSnap.exists()) {
+            const count = docSnap.data().count || 0;
+            document.getElementById('likeCount').textContent = count;
+        } else {
+            document.getElementById('likeCount').textContent = '0';
         }
-        document.getElementById('likeCount').textContent = count;
         
         // Verificar se o usuário já curtiu
         const userLiked = localStorage.getItem(USER_LIKED_KEY);
@@ -19,13 +40,13 @@ function loadLikes() {
             document.getElementById('likeButton').classList.add('liked');
         }
     } catch (error) {
-        console.log('Erro ao carregar likes:', error);
+        console.error('Erro ao carregar likes:', error);
         document.getElementById('likeCount').textContent = '0';
     }
 }
 
 // Função para dar like
-function handleLike() {
+async function handleLike() {
     const button = document.getElementById('likeButton');
     const userLiked = localStorage.getItem(USER_LIKED_KEY);
     
@@ -35,14 +56,14 @@ function handleLike() {
     }
     
     try {
-        // Buscar valor atual
-        let currentCount = parseInt(localStorage.getItem(LIKE_COUNT_KEY) || '0');
+        // Incrementar o contador no Firestore
+        await updateDoc(likesRef, {
+            count: increment(1)
+        });
         
-        // Incrementar
-        const newCount = currentCount + 1;
-        
-        // Salvar novo valor
-        localStorage.setItem(LIKE_COUNT_KEY, newCount.toString());
+        // Buscar o novo valor
+        const docSnap = await getDoc(likesRef);
+        const newCount = docSnap.data().count;
         
         // Atualizar interface
         document.getElementById('likeCount').textContent = newCount;
@@ -114,21 +135,23 @@ const pathsContent = {
         content: `
             <h3>Formação Acadêmica</h3>
             <p>
-                Graduado em <strong>Direito pelo Centro Universitário UniFOA em 2011</strong>, pós-graduado em Direito e Processo do Trabalho.
+                Graduado em <strong>Direito pelo Centro Universitário UniFOA em 2011</strong>, 
+                atualmente cursando pós-graduação em Direito e Processo do Trabalho.
             </p>
 
             <h3>Atuação Profissional</h3>
             <p>
-                Exerce a advocacia com dedicação, empenho e resiliência de forma ampla,atuando em diversos ramos do direito com expertise consolidada.
+                Exerce a advocacia com dedicação, empenho e resiliência de forma ampla, 
+                atuando em diversos ramos do direito com expertise consolidada.
             </p>
 
             <h3>Áreas de Especialização</h3>
             <ul>
-                <li><strong>Direito Civil:</strong> Contratos, responsabilidade civil, família e sucessões;</li>
-                <li><strong>Direito Previdenciário:</strong> Aposentadorias, pensões e benefícios;</li>
-                <li><strong>Direito Tributário:</strong> Planejamento tributário e contencioso fiscal;</li>
-                <li><strong>Direito do Consumidor:</strong> Defesa dos direitos do consumidor;</li>
-                <li><strong>Direito do Digital:</strong> Proteção de Dados (LGPD), Provas Digitais, Contratos Digitais e Assinaturas Eletrônicas.</li>
+                <li><strong>Direito Civil:</strong> Contratos, responsabilidade civil, família e sucessões</li>
+                <li><strong>Direito Previdenciário:</strong> Aposentadorias, pensões e benefícios</li>
+                <li><strong>Direito Tributário:</strong> Planejamento tributário e contencioso fiscal</li>
+                <li><strong>Direito do Consumidor:</strong> Defesa dos direitos do consumidor</li>
+                <li><strong>Direito Digital:</strong> Proteção de Dados (LGPD), Provas Digitais, Contratos Digitais e Assinaturas Eletrônicas.</li>
             </ul>
 
             <h3>Abordagem Integrada</h3>
@@ -288,8 +311,13 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Inicializar partículas quando a página carregar
+// Inicializar partículas e carregar likes quando a página carregar
 window.addEventListener('load', function() {
     createParticles();
-    loadLikes(); // Carregar contador de likes
+    loadLikes();
 });
+
+// Tornar funções globais para serem acessadas pelo HTML
+window.handleLike = handleLike;
+window.showPath = showPath;
+window.closeModal = closeModal;
