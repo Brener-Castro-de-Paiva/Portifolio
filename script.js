@@ -149,6 +149,7 @@ const pathsContent = {
             <ul>
                 <li><strong>Direito Civil:</strong> Contratos, responsabilidade civil, família e sucessões</li>
                 <li><strong>Direito Previdenciário:</strong> Aposentadorias, pensões e benefícios</li>
+                <li><strong>Direito do Trabalho: Rescisões contratuais, Acidentes de trabalho e doenças ocupacionais, Reclamações trabalhistas em geral.</strong>
                 <li><strong>Direito Tributário:</strong> Planejamento tributário e contencioso fiscal</li>
                 <li><strong>Direito do Consumidor:</strong> Defesa dos direitos do consumidor</li>
                 <li><strong>Direito Digital:</strong> Proteção de Dados (LGPD), Provas Digitais, Contratos Digitais e Assinaturas Eletrônicas.</li>
