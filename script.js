@@ -114,22 +114,21 @@ const pathsContent = {
         content: `
             <h3>Formação Acadêmica</h3>
             <p>
-                Graduado em <strong>Direito pelo Centro Universitário UniFOA em 2011</strong>, 
-                atualmente cursando pós-graduação em Direito e Processo do Trabalho.
+                Graduado em <strong>Direito pelo Centro Universitário UniFOA em 2011</strong>, pós-graduado em Direito e Processo do Trabalho.
             </p>
 
             <h3>Atuação Profissional</h3>
             <p>
-                Exerce a advocacia com dedicação, empenho e resiliência de forma ampla, 
-                atuando em diversos ramos do direito com expertise consolidada.
+                Exerce a advocacia com dedicação, empenho e resiliência de forma ampla,atuando em diversos ramos do direito com expertise consolidada.
             </p>
 
             <h3>Áreas de Especialização</h3>
             <ul>
-                <li><strong>Direito Civil:</strong> Contratos, responsabilidade civil, família e sucessões</li>
-                <li><strong>Direito Previdenciário:</strong> Aposentadorias, pensões e benefícios</li>
-                <li><strong>Direito Tributário:</strong> Planejamento tributário e contencioso fiscal</li>
-                <li><strong>Direito do Consumidor:</strong> Defesa dos direitos do consumidor</li>
+                <li><strong>Direito Civil:</strong> Contratos, responsabilidade civil, família e sucessões;</li>
+                <li><strong>Direito Previdenciário:</strong> Aposentadorias, pensões e benefícios;</li>
+                <li><strong>Direito Tributário:</strong> Planejamento tributário e contencioso fiscal;</li>
+                <li><strong>Direito do Consumidor:</strong> Defesa dos direitos do consumidor;</li>
+                <li><strong>Direito do Digital:</strong> Proteção de Dados (LGPD), Provas Digitais, Contratos Digitais e Assinaturas Eletrônicas.</li>
             </ul>
 
             <h3>Abordagem Integrada</h3>
