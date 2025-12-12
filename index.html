@@ -11,6 +11,16 @@
         <header>
             <h1>BRENER CASTRO DE PAIVA</h1>
             <p>Advogado | Desenvolvedor Web</p>
+            
+            <div class="like-section">
+                <button class="like-button" onclick="handleLike()" id="likeButton">
+                    <svg class="heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                    <span id="likeCount">...</span>
+                </button>
+                <p class="like-text">Curtiu o portfólio?</p>
+            </div>
         </header>
 
         <section class="intro-section">
@@ -34,13 +44,13 @@
 
                 <div class="paths-container">
                     <div class="path-card" onclick="showPath('juridico')">
-                        <img src="imagem/imagem do botão area juridica.png" alt="Caminho Jurídico" class="path-image">
+                        <img src="imagem/image2.jpeg" alt="Caminho Jurídico" class="path-image">
                         <h4>Caminho Jurídico</h4>
                         <p>Conheça a trajetória profissional na advocacia</p>
                     </div>
 
                     <div class="path-card" onclick="showPath('tecnologia')">
-                        <img src="imagem/imagem botão tecnologia.png" alt="Caminho Tecnológico" class="path-image">
+                        <img src="imagem/image1.jpeg" alt="Caminho Tecnológico" class="path-image">
                         <h4>Caminho Tecnológico</h4>
                         <p>Explore as competências em desenvolvimento de sistemas</p>
                     </div>

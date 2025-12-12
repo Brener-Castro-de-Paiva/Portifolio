@@ -1,3 +1,112 @@
+// Sistema de Likes - Versão LocalStorage
+const LIKE_COUNT_KEY = 'portfolio-total-likes';
+const USER_LIKED_KEY = 'portfolio-user-liked';
+
+// Carregar likes ao iniciar a página
+function loadLikes() {
+    try {
+        // Buscar contagem de likes do localStorage
+        let count = localStorage.getItem(LIKE_COUNT_KEY);
+        if (!count) {
+            count = 0;
+            localStorage.setItem(LIKE_COUNT_KEY, '0');
+        }
+        document.getElementById('likeCount').textContent = count;
+        
+        // Verificar se o usuário já curtiu
+        const userLiked = localStorage.getItem(USER_LIKED_KEY);
+        if (userLiked === 'true') {
+            document.getElementById('likeButton').classList.add('liked');
+        }
+    } catch (error) {
+        console.log('Erro ao carregar likes:', error);
+        document.getElementById('likeCount').textContent = '0';
+    }
+}
+
+// Função para dar like
+function handleLike() {
+    const button = document.getElementById('likeButton');
+    const userLiked = localStorage.getItem(USER_LIKED_KEY);
+    
+    // Se já curtiu, não fazer nada
+    if (userLiked === 'true') {
+        return;
+    }
+    
+    try {
+        // Buscar valor atual
+        let currentCount = parseInt(localStorage.getItem(LIKE_COUNT_KEY) || '0');
+        
+        // Incrementar
+        const newCount = currentCount + 1;
+        
+        // Salvar novo valor
+        localStorage.setItem(LIKE_COUNT_KEY, newCount.toString());
+        
+        // Atualizar interface
+        document.getElementById('likeCount').textContent = newCount;
+        button.classList.add('liked');
+        
+        // Marcar que o usuário já curtiu
+        localStorage.setItem(USER_LIKED_KEY, 'true');
+        
+        // Animação de confete
+        createConfetti();
+        
+    } catch (error) {
+        console.error('Erro ao curtir:', error);
+        alert('Ops! Não foi possível registrar seu like. Tente novamente.');
+    }
+}
+
+// Efeito de confete ao curtir
+function createConfetti() {
+    for (let i = 0; i < 30; i++) {
+        const confetti = document.createElement('div');
+        confetti.style.cssText = `
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: ${['#ff3b5c', '#ff6b9d', '#ffc107', '#4caf50', '#2196f3'][Math.floor(Math.random() * 5)]};
+            left: 50%;
+            top: 150px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            animation: confettiFall ${1 + Math.random()}s ease-out forwards;
+        `;
+        
+        const angle = (Math.random() - 0.5) * 120;
+        const distance = 50 + Math.random() * 100;
+        confetti.style.setProperty('--angle', angle + 'deg');
+        confetti.style.setProperty('--distance', distance + 'px');
+        
+        document.body.appendChild(confetti);
+        
+        setTimeout(() => confetti.remove(), 1500);
+    }
+}
+
+// Adicionar animação de confete
+const confettiStyle = document.createElement('style');
+confettiStyle.textContent = `
+    @keyframes confettiFall {
+        0% {
+            transform: translate(0, 0) rotate(0deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(
+                calc(cos(var(--angle)) * var(--distance)),
+                calc(sin(var(--angle)) * var(--distance) + 200px)
+            ) rotate(720deg);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(confettiStyle);
+
 // Conteúdo dos caminhos
 const pathsContent = {
     juridico: {
@@ -21,7 +130,6 @@ const pathsContent = {
                 <li><strong>Direito Previdenciário:</strong> Aposentadorias, pensões e benefícios</li>
                 <li><strong>Direito Tributário:</strong> Planejamento tributário e contencioso fiscal</li>
                 <li><strong>Direito do Consumidor:</strong> Defesa dos direitos do consumidor</li>
-                <li><strong>Direito do Digital:</strong> Adequação de empresas à LGPD, Provas Digitais, Contratos Digitais e Assinaturas Eletrônicas.</li>
             </ul>
 
             <h3>Abordagem Integrada</h3>
@@ -182,4 +290,7 @@ style.textContent = `
 document.head.appendChild(style);
 
 // Inicializar partículas quando a página carregar
-window.addEventListener('load', createParticles);
+window.addEventListener('load', function() {
+    createParticles();
+    loadLikes(); // Carregar contador de likes
+});
