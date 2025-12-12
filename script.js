@@ -21,6 +21,7 @@ const pathsContent = {
                 <li><strong>Direito Previdenciário:</strong> Aposentadorias, pensões e benefícios</li>
                 <li><strong>Direito Tributário:</strong> Planejamento tributário e contencioso fiscal</li>
                 <li><strong>Direito do Consumidor:</strong> Defesa dos direitos do consumidor</li>
+                <li><strong>Direito do Digital:</strong> Adequação de empresas à LGPD, Provas Digitais, Contratos Digitais e Assinaturas Eletrônicas.   Defesa dos direitos do consumidor</li>
             </ul>
 
             <h3>Abordagem Integrada</h3>
