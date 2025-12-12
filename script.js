@@ -136,7 +136,7 @@ const pathsContent = {
             <h3>Formação Acadêmica</h3>
             <p>
                 Graduado em <strong>Direito pelo Centro Universitário UniFOA em 2011</strong>, 
-                atualmente cursando pós-graduação em Direito e Processo do Trabalho.
+                e pós-graduado em Direito e Processo do Trabalho.
             </p>
 
             <h3>Atuação Profissional</h3>
