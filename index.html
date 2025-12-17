@@ -10,16 +10,31 @@
     <div class="container">
         <header>
             <h1>BRENER CASTRO DE PAIVA</h1>
-            <p>Advogado | Desenvolvedor Web</p>
+            <p>Advogado | Desenvolvedor de Sistemas</p>
             
-            <div class="like-section">
-                <button class="like-button" onclick="handleLike()" id="likeButton">
-                    <svg class="heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            <div class="stats-section">
+                <div class="stat-item">
+                    <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
                     </svg>
-                    <span id="likeCount">...</span>
-                </button>
-                <p class="like-text">Curtiu o portfólio?</p>
+                    <div class="stat-info">
+                        <span class="stat-number" id="viewCount">...</span>
+                        <span class="stat-label">Visualizações</span>
+                    </div>
+                </div>
+                
+                <div class="stat-item">
+                    <button class="like-button" onclick="handleLike()" id="likeButton">
+                        <svg class="heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                        <div class="stat-info">
+                            <span class="stat-number" id="likeCount">...</span>
+                            <span class="stat-label">Curtidas</span>
+                        </div>
+                    </button>
+                </div>
             </div>
         </header>
 
@@ -29,7 +44,7 @@
                 Esta apresentação tem o propósito de permitir que você conheça melhor Brener Castro de Paiva.
             </p>
             <p>
-                Formado em Direito pelo Centro Universitário UniFOA (2011) e  pós-graduado em Direito e Processo do Trabalho, Brener exerce a advocacia com dedicação, rigor técnico e resiliência, atuando de forma abrangente em diferentes áreas do Direito.
+                Formado em Direito pelo Centro Universitário UniFOA (2011) e atualmente pós-graduando em Direito e Processo do Trabalho, Brener exerce a advocacia com dedicação, rigor técnico e resiliência, atuando de forma abrangente em diferentes áreas do Direito.
             </p>
             <p>
                 Sua experiência prática envolve demandas de natureza civil, previdenciária, tributária, consumerista e digital, além de questões que exigem a integração dessas áreas, sempre com foco na solução eficiente dos problemas apresentados.
