@@ -1,6 +1,6 @@
 // Configuração do Firebase
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import { getFirestore, doc, getDoc, updateDoc, increment } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import { getFirestore, doc, getDoc, updateDoc, setDoc, increment } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCAFesD2DSvxshVDfdWzk9iny4ojJlPIu0",
@@ -16,11 +16,66 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Referência para o documento de likes
+// Referências para os documentos
 const likesRef = doc(db, 'likes', 'portfolio');
+const viewsRef = doc(db, 'views', 'portfolio');
 
-// Chave para verificar se o usuário já curtiu
+// Chaves para localStorage
 const USER_LIKED_KEY = 'portfolio-user-liked';
+const SESSION_VIEWED_KEY = 'portfolio-session-viewed';
+
+// Carregar visualizações
+async function loadViews() {
+    try {
+        const docSnap = await getDoc(viewsRef);
+        
+        if (docSnap.exists()) {
+            const count = docSnap.data().count || 0;
+            document.getElementById('viewCount').textContent = count;
+        } else {
+            // Se não existe, criar o documento
+            await setDoc(viewsRef, { count: 0 });
+            document.getElementById('viewCount').textContent = '0';
+        }
+    } catch (error) {
+        console.error('Erro ao carregar visualizações:', error);
+        document.getElementById('viewCount').textContent = '0';
+    }
+}
+
+// Registrar visualização
+async function registerView() {
+    // Verificar se já registrou nesta sessão
+    const sessionViewed = sessionStorage.getItem(SESSION_VIEWED_KEY);
+    
+    if (sessionViewed === 'true') {
+        return; // Já contou nesta sessão
+    }
+    
+    try {
+        // Verificar se o documento existe
+        const docSnap = await getDoc(viewsRef);
+        
+        if (docSnap.exists()) {
+            // Incrementar o contador
+            await updateDoc(viewsRef, {
+                count: increment(1)
+            });
+        } else {
+            // Criar o documento com count = 1
+            await setDoc(viewsRef, { count: 1 });
+        }
+        
+        // Marcar que já visualizou nesta sessão
+        sessionStorage.setItem(SESSION_VIEWED_KEY, 'true');
+        
+        // Atualizar o contador na página
+        await loadViews();
+        
+    } catch (error) {
+        console.error('Erro ao registrar visualização:', error);
+    }
+}
 
 // Carregar likes ao iniciar a página
 async function loadLikes() {
@@ -31,6 +86,8 @@ async function loadLikes() {
             const count = docSnap.data().count || 0;
             document.getElementById('likeCount').textContent = count;
         } else {
+            // Se não existe, criar o documento
+            await setDoc(likesRef, { count: 0 });
             document.getElementById('likeCount').textContent = '0';
         }
         
@@ -56,14 +113,22 @@ async function handleLike() {
     }
     
     try {
-        // Incrementar o contador no Firestore
-        await updateDoc(likesRef, {
-            count: increment(1)
-        });
+        // Verificar se o documento existe
+        const docSnap = await getDoc(likesRef);
+        
+        if (docSnap.exists()) {
+            // Incrementar o contador
+            await updateDoc(likesRef, {
+                count: increment(1)
+            });
+        } else {
+            // Criar o documento com count = 1
+            await setDoc(likesRef, { count: 1 });
+        }
         
         // Buscar o novo valor
-        const docSnap = await getDoc(likesRef);
-        const newCount = docSnap.data().count;
+        const updatedDoc = await getDoc(likesRef);
+        const newCount = updatedDoc.data().count;
         
         // Atualizar interface
         document.getElementById('likeCount').textContent = newCount;
@@ -136,7 +201,7 @@ const pathsContent = {
             <h3>Formação Acadêmica</h3>
             <p>
                 Graduado em <strong>Direito pelo Centro Universitário UniFOA em 2011</strong>, 
-                e pós-graduado em Direito e Processo do Trabalho.
+                atualmente cursando pós-graduação em Direito e Processo do Trabalho.
             </p>
 
             <h3>Atuação Profissional</h3>
@@ -149,10 +214,8 @@ const pathsContent = {
             <ul>
                 <li><strong>Direito Civil:</strong> Contratos, responsabilidade civil, família e sucessões</li>
                 <li><strong>Direito Previdenciário:</strong> Aposentadorias, pensões e benefícios</li>
-                <li><strong>Direito do Trabalho:</strong> Rescisões contratuais, Acidentes de trabalho e doenças ocupacionais, Reclamações trabalhistas em geral.
                 <li><strong>Direito Tributário:</strong> Planejamento tributário e contencioso fiscal</li>
                 <li><strong>Direito do Consumidor:</strong> Defesa dos direitos do consumidor</li>
-                <li><strong>Direito Digital:</strong> Proteção de Dados (LGPD), Provas Digitais, Contratos Digitais e Assinaturas Eletrônicas.</li>
             </ul>
 
             <h3>Abordagem Integrada</h3>
@@ -312,10 +375,12 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Inicializar partículas e carregar likes quando a página carregar
+// Inicializar partículas e carregar dados quando a página carregar
 window.addEventListener('load', function() {
     createParticles();
     loadLikes();
+    loadViews();
+    registerView(); // Registrar a visualização
 });
 
 // Tornar funções globais para serem acessadas pelo HTML
