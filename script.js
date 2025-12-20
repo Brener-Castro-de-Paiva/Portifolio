@@ -213,7 +213,7 @@ const pathsContent = {
             <h3>Áreas de Especialização</h3>
             <ul>
                 <li><strong>Direito Civil:</strong> Contratos, responsabilidade civil, família e sucessões</li>
-                <li><strong>Direito do Trabalho:</strong> Rescisão contrautal, acidente de trabalho e doença ocupacional, demandas de forma geral.</li>
+                <li><strong>Direito do Trabalho:</strong> Rescisão contratual, acidente de trabalho e doença ocupacional, demandas de forma geral.</li>
                 <li><strong>Direito Previdenciário:</strong> Aposentadorias, pensões e benefícios</li>
                 <li><strong>Direito Tributário:</strong> Planejamento tributário e contencioso fiscal</li>
                 <li><strong>Direito do Consumidor:</strong> Defesa dos direitos do consumidor</li>
